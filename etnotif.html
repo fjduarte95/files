@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notificación</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Notificación
+      </h1>
+      <!-- <p class="subtitle">
+        Notificación PTM 
+      </p> -->
+      <div class="columns">
+        <div class="column">
+          <form id="formNotif">
+            <div class="field">
+              <label class="label">Orden de Producción</label>
+              <p class="control">
+                <input class="input" type="text" id="inpOrdProd" 
+                placeholder="6322083" required autofocus>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Cantidad a Producir</label>
+              <p class="control">
+                <input class="input amount" type="text" id="inpCantOrden" 
+                placeholder="1,234.567" required>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Cantidad Base</label>
+              <p class="control">
+                <input class="input amount" type="text" id="inpCantBase" 
+                  placeholder="1,234.567" required>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Cantidad a Notificar</label>
+              <p class="control">
+                <input class="input amount" type="text" id="inpCantBuena" 
+                placeholder="1,234.567" required>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Cantidad Fabricada</label>
+              <p class="control">
+                <input class="input" type="text" id="inpCantFabric"
+                  placeholder="1,234.567" value="0.00" readonly>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button type="submit" class="button is-success">
+                  Aceptar
+                </button>
+              </p>
+            </div>            
+          </form>
+        </div>
+        <div class="column">
+          <table class="table is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th align="right">No.</th>
+                <th align="right">Cantd</th>
+                <th align="right">Exced</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyEtiq">
+              <tr>
+                <th align="right">&nbsp;</th>
+                <td align="right">&nbsp;</td>
+                <td align="right">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="index.js"></script>
+</body>
+</html>

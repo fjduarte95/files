@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Cálculos</title>
+
+    <link rel="icon" href="/FJD/Rendimientos/img/icon.png">
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h1>Cálculos</h1>
+
+      <form id="frmRend" class="form-group">
+        <div class="row">
+          <div class="col">
+            <label for="inpSald" class="col-form-label">
+              Saldo Total
+            </label>
+            <input type="tel" id="inpSald" class="form-control curr"
+                   placeholder="0.00">
+          </div>
+          <div class="col">
+            <label for="inpTasa" class="col-form-label">
+              Tasa Intéres
+            </label>
+            <input type="tel" id="inpTasa" class="form-control curr" 
+                   placeholder="0.00">
+          </div>
+          <div class="col">
+            <label for="inpRend" class="col-form-label">
+              Rendimiento
+            </label>
+            <input type="tel" id="inpRend" class="form-control curr" 
+                   placeholder="0.00" readonly>
+          </div>
+        </div>
+      </form>
+
+      <form id="frmSald" class="form-group">
+        <div class="row">
+          <div class="col">
+            <label for="inpRend2" class="col-form-label">
+              Rendimiento
+            </label>
+            <input type="tel" id="inpRend2" class="form-control curr"
+                   placeholder="0.00">
+          </div>
+          <div class="col">
+            <label for="inpTasa2" class="col-form-label">
+              Tasa Intéres
+            </label>
+            <input type="tel" id="inpTasa2" class="form-control curr"
+                   placeholder="0.00">
+          </div>
+          <div class="col">
+            <label for="inpSald2" class="col-form-label">
+              Saldo Total
+            </label>
+            <input type="tel" id="inpSald2" class="form-control curr" 
+                   placeholder="0.00" readonly>
+          </div>
+        </div>
+      </form>
+
+      <form id="frmTasa" class="form-group">
+        <div class="row">
+          <div class="col">
+            <label for="inpSald3" class="col-form-label">
+              Saldo Total
+            </label>
+            <input type="tel" id="inpSald3" class="form-control curr" 
+                   placeholder="0.00">
+          </div>
+          <div class="col">
+            <label for="inpRend3" class="col-form-label">
+              Rendimiento
+            </label>
+            <input type="tel" id="inpRend3" class="form-control curr"
+                   placeholder="0.00">
+          </div>
+          <div class="col">
+            <label for="inpTasa3" class="col-form-label">
+              Tasa Intéres
+            </label>
+            <input type="tel" id="inpTasa3" class="form-control curr"
+                   placeholder="0.00" readonly>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(() => { let a = $("#frmRend"), e = $("#frmSald"), l = $("#frmTasa"), r = $("#inpSald"), n = $("#inpTasa"), v = $("#inpRend"), t = $("#inpSald2"), d = $("#inpTasa2"), i = $("#inpRend2"), p = $("#inpSald3"), s = $("#inpTasa3"), u = $("#inpRend3"), c = a => { let e = 0; return "string" == typeof a && "" !== a && (e = parseFloat(a.replace(/,/g, ""))), e }, f = a => { let e = ""; return "number" == typeof a && 0 !== a && (e = a.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")), e }; a.find(".curr").mask("000,000.00", { reverse: !0 }).change(() => { let a, e, l; v.val("0.00"), l = ((a, e) => { let l = 0; return 0 !== a && 0 !== e && (l = a * (e / 100) / 360), l })(a = c(r.val()), e = c(n.val())), r.val(f(a)), n.val(f(e)), v.val(f(l)) }), e.find(".curr").mask("000,000.00", { reverse: !0 }).change(() => { let a, e, l; t.val("0.00"), e = c(d.val()), a = ((a, e) => { let l = 0; return 0 !== a && 0 !== e && (l = 360 * a / (e / 100)), l })(l = c(i.val()), e), t.val(f(a)), d.val(f(e)), i.val(f(l)) }), l.find(".curr").mask("000,000.00", { reverse: !0 }).change(() => { let a, e, l; s.val("0.00"), e = ((a, e) => { let l = 0; return 0 !== a && 0 !== e && (l = 360 * a / e * 100), l })(l = c(u.val()), a = c(p.val())), p.val(f(a)), s.val(f(e)), u.val(f(l)) }) });
+    </script>
+  </body>
+</html>

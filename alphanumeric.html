@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alfanuméricos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">
+          Alfanuméricos
+        </h1>
+        <p class="subtitle">
+          Cálculo de alfanuméricos
+        </p>
+        <form id="alpnr_form">
+          <div class="field">
+            <label class="label">Alfanumérico 1</label>
+            <p class="control">
+              <input class="input" type="text" id="alpnr_inp1" placeholder="Alfanumérico 1" autofocus required>
+            </p>
+          </div>
+          <div class="field">
+            <label class="label">Alfanumérico 2</label>
+            <p class="control">
+              <input class="input" type="text" id="alpnr_inp2" placeholder="Alfanumérico 2">
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button type="submit" class="button is-success">
+                Aceptar
+              </button>
+            </p>
+          </div>            
+        </form>
+        <div id="alpnr_test"></div>
+      </div>
+    </section>
+    <script src="index.js"></script>
+  </body>
+</html>
