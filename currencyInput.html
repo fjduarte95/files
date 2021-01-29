@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Currency Input</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Currency Input
+      </h1>
+      <p class="subtitle">
+        Input con formato de moneda
+      </p>
+      <form id="alpnr_form">
+        <div class="field">
+          <label class="label">Importe</label>
+          <p class="control">
+            <input class="input" type="text" id="importe" placeholder="Alfanumérico 1" autofocus required>
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+  <script>
+    let importe = document.getElementById('importe');
+
+    // Convierte a formato de entrada
+    let decimalInput = (value) => {
+      if (value == 0) {
+        return 0;
+      }
+
+      if (typeof value == 'string') {
+        value = (value.replace(/,/g, '') * 1);
+      }
+
+      return parseFloat(value.toFixed(2));
+    }
+
+    // Convierte a formato de salida 
+    let decimalOutput = (value) => {
+      if (value == 0) {
+        return "0.00";
+      }
+
+      value = decimalInput(value).toFixed(2);
+
+      return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    importe.addEventListener('input', (e) => {
+      let value = e.target.value
+        .replace(/\,/g, '').replace(/\./g, '');
+
+      if (decimalInput(value) == 0) {
+        e.target.value = '0.00';
+      } else {
+        e.target.value = decimalOutput(value / 100);
+      }
+    });
+  </script>
+</body>
+
+</html>
