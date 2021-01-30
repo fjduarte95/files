@@ -19,16 +19,22 @@
       </p>
       <form id="alpnr_form">
         <div class="field">
-          <label class="label">Importe</label>
+          <label class="label">Cantidad</label>
           <p class="control">
-            <input class="input" type="text" id="importe" placeholder="Alfanumérico 1" autofocus required>
+            <input class="input decimal" type="text" name="cantidad" placeholder="0.00" autofocus>
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Precio</label>
+          <p class="control">
+            <input class="input decimal" type="text" name="monto" placeholder="0.00">
           </p>
         </div>
       </form>
     </div>
   </section>
   <script>
-    let importe = document.getElementById('importe');
+    const decimalInputs = document.querySelectorAll('.decimal');
 
     // Convierte a formato de entrada
     let decimalInput = (value) => {
@@ -46,7 +52,7 @@
     // Convierte a formato de salida 
     let decimalOutput = (value) => {
       if (value == 0) {
-        return "0.00";
+        return '0.00';
       }
 
       value = decimalInput(value).toFixed(2);
@@ -54,15 +60,15 @@
       return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
-    importe.addEventListener('input', (e) => {
-      let value = e.target.value
-        .replace(/\,/g, '').replace(/\./g, '');
 
-      if (decimalInput(value) == 0) {
-        e.target.value = '0.00';
-      } else {
+    decimalInputs.forEach((input) => {
+      input.addEventListener('input', (e) => {
+        // Descarta todo lo que no sea dígito
+        const value = e.target.value.replace(/\D/g, '');
+
+        // Asigna el valor formateado
         e.target.value = decimalOutput(value / 100);
-      }
+      });
     });
   </script>
 </body>
