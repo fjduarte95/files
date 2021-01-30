@@ -25,9 +25,9 @@ window.addEventListener('load', (event) => {
   
         return 0;
       }
-    }
+    });
   
-    return parseFloat(decim); // decim;
+    return decim;
   }
   
   // Conversión decimal - alfanumérico 
