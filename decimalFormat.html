@@ -1,6 +1,6 @@
 <script>
   // Convierte a formato de entrada
-  let decimalInput = (value) => {
+  const decimalInput = (value) => {
     if (value == 0) {
       return 0;
     }
@@ -13,9 +13,9 @@
   }
 
   // Convierte a formato de salida 
-  let decimalOutput = (value) => {
+  const decimalOutput = (value) => {
     if (value == 0) {
-      return "0.00";
+      return '0.00';
     }
 
     value = decimalInput(value).toFixed(2);
