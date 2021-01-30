@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notificación</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 </head>
+
 <body>
   <section class="section">
     <div class="container">
@@ -16,41 +18,30 @@
         Notificación PTM 
       </p> -->
       <div class="columns">
-        <div class="column">
+        <div class="column is-6">
           <form id="formNotif">
-            <div class="field">
-              <label class="label">Orden de Producción</label>
-              <p class="control">
-                <input class="input" type="text" id="inpOrdProd" 
-                placeholder="6322083" required autofocus>
-              </p>
-            </div>
             <div class="field">
               <label class="label">Cantidad a Producir</label>
               <p class="control">
-                <input class="input amount" type="text" id="inpCantOrden" 
-                placeholder="1,234.567" required>
+                <input class="input decimal" type="text" id="inpCantOrden" value="123.00" required>
               </p>
             </div>
             <div class="field">
               <label class="label">Cantidad Base</label>
               <p class="control">
-                <input class="input amount" type="text" id="inpCantBase" 
-                  placeholder="1,234.567" required>
+                <input class="input decimal" type="text" id="inpCantBase" value="12.30" required>
               </p>
             </div>
             <div class="field">
               <label class="label">Cantidad a Notificar</label>
               <p class="control">
-                <input class="input amount" type="text" id="inpCantBuena" 
-                placeholder="1,234.567" required>
+                <input class="input decimal" type="text" id="inpCantBuena" value="1.23" required>
               </p>
             </div>
             <div class="field">
-              <label class="label">Cantidad Fabricada</label>
+              <label class="label">Cantidad Restante</label>
               <p class="control">
-                <input class="input" type="text" id="inpCantFabric"
-                  placeholder="1,234.567" value="0.00" readonly>
+                <input class="input decimal" type="text" id="inpCantRest" placeholder="0.00" readonly>
               </p>
             </div>
             <div class="field">
@@ -59,21 +50,21 @@
                   Aceptar
                 </button>
               </p>
-            </div>            
+            </div>
           </form>
         </div>
-        <div class="column">
-          <table class="table is-striped is-fullwidth">
+        <div class="column is-6">
+          <table class="table is-narrow is-striped is-fullwidth">
             <thead>
               <tr>
-                <th align="right">No.</th>
-                <th align="right">Cantd</th>
-                <th align="right">Exced</th>
+                <th align="center">No.</th>
+                <th align="right">Cantidad</th>
+                <th align="right">Excedente</th>
               </tr>
             </thead>
             <tbody id="tbodyEtiq">
               <tr>
-                <th align="right">&nbsp;</th>
+                <th align="center">&nbsp;</th>
                 <td align="right">&nbsp;</td>
                 <td align="right">&nbsp;</td>
               </tr>
@@ -85,4 +76,5 @@
   </section>
   <script src="index.js"></script>
 </body>
+
 </html>
