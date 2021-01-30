@@ -2,37 +2,36 @@ window.addEventListener('load', (event) => {
   // console.log({ event });
 
   const formNotif = document.getElementById('formNotif');
-  const inpOrdProd = document.getElementById('inpOrdProd');
   const inpCantOrden = document.getElementById('inpCantOrden');
   const inpCantBase = document.getElementById('inpCantBase');
   const inpCantBuena = document.getElementById('inpCantBuena');
-  const inpCantFabric = document.getElementById('inpCantFabric');
+  const inpCantRest = document.getElementById('inpCantRest');
   const tbodyEtiq = document.getElementById('tbodyEtiq');
-  const amountInputs = document.querySelectorAll('.amount');
-  
-  let cantBuena = 0, cantFabricada = 0, arrayEtiquetas = [];
-  let ordenProd = '', cantOrden = 0, cantBase = 0;
+  const decimalInputs = document.querySelectorAll('.decimal');
+
+  let cantBuena = 0, cantFabricada = 0, etiqs = [],
+    cantOrden = 0, cantBase = 0;
 
   function buscaDatos(cantBuena) {
-    let cantEtiq = arrayEtiquetas.length;
+    let cantEtiq = etiqs.length;
     let cantNotificar = 0, cantPosterior = 0;
 
     if (cantEtiq > 0) {
       let i = (cantEtiq - 1);
-      cantNotificar = decimalInput(cantBuena + arrayEtiquetas[i].exced);
+      cantNotificar = decimalInput(cantBuena + etiqs[i].exced);
       cantPosterior = decimalInput(cantBuena + cantFabricada);
 
       if (cantPosterior <= cantOrden) {
         if (cantNotificar < cantBase) {
-          arrayEtiquetas[i].exced = cantNotificar;
+          etiqs[i].exced = cantNotificar;
         }
         else {
-          arrayEtiquetas[i].exced = 0;
+          etiqs[i].exced = 0;
         }
       }
     }
     else {
-      cantPosterior = cantNotificar = (cantBuena + cantFabricada);
+      cantPosterior = cantNotificar = decimalInput(cantBuena + cantFabricada);
     }
 
     if (cantFabricada == cantOrden) {
@@ -50,11 +49,11 @@ window.addEventListener('load', (event) => {
       return false;
     } else {
       cantFabricada = imprimeEtiqueta(cantNotificar, cantPosterior);
-      inpCantFabric.value = decimalOutput(cantFabricada);
+      inpCantRest.value = decimalOutput(cantOrden - cantFabricada);
 
       // console.log({ cantPosterior });
       // console.log({ cantFabricada });
-      // console.log({ arrayEtiquetas });
+      // console.log({ etiqs });
 
       return true;
     }
@@ -71,7 +70,7 @@ window.addEventListener('load', (event) => {
       return cantPosterior;
     }
     else {
-      const cantExced = (cantNotificar - cantBase);
+      const cantExced = decimalInput(cantNotificar - cantBase);
 
       guardaEtiqueta(cantBase, cantExced);
 
@@ -80,28 +79,24 @@ window.addEventListener('load', (event) => {
   }
 
   function guardaEtiqueta(menge, exced) {
-    const contr = arrayEtiquetas.length + 1;
-    
-    const etiqueta = {
-      contr: contr,
+    etiqs.push({
+      contr: (etiqs.length + 1),
       menge: menge,
       exced: exced
-    };
-
-    arrayEtiquetas.push(etiqueta);
+    });
   }
 
-  function muestraEtiquetas(arrayEtiquetas) {
+  function muestraEtiquetas(etiqs) {
     let content = '';
 
-    if (arrayEtiquetas.length == 0) {
+    if (etiqs.length == 0) {
       return false;
     }
 
-    arrayEtiquetas.forEach(etiqueta => {
+    etiqs.forEach(etiqueta => {
       content += (`
         <tr>
-          <th align="right">${etiqueta.contr}</th>
+          <th align="center">${etiqueta.contr}</th>
           <td align="right">${decimalOutput(etiqueta.menge)}</td>
           <td align="right">${decimalOutput(etiqueta.exced)}</td>
         </tr>
@@ -125,11 +120,11 @@ window.addEventListener('load', (event) => {
 
     return parseFloat(value.toFixed(2));
   }
-  
+
   // Convierte a formato de salida 
   let decimalOutput = (value) => {
     if (value == 0) {
-      return "0.00";
+      return '0.00';
     }
 
     value = decimalInput(value).toFixed(2);
@@ -137,27 +132,24 @@ window.addEventListener('load', (event) => {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  amountInputs.forEach((input) => {
-    input.addEventListener('change', () => {
-      let value = decimalInput(input.value);
+  decimalInputs.forEach((input) => {
+    input.addEventListener('input', (e) => {
+      // Descarta todo lo que no sea dígito
+      const value = e.target.value.replace(/\D/g, '');
 
-      input.value = decimalOutput(value / 100);
+      // Asigna valor formateado
+      e.target.value = decimalOutput(value / 100);
     });
   });
 
   formNotif.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    ordenProd = inpOrdProd.value;
     cantOrden = decimalInput(inpCantOrden.value);
-    cantBase  = decimalInput(inpCantBase.value);
+    cantBase = decimalInput(inpCantBase.value);
     cantBuena = decimalInput(inpCantBuena.value);
 
-    if (ordenProd == 0) {
-      alert('Orden de Producción no válida');
-      inpOrdProd.focus();
-    }
-    else if (cantOrden <= 0) {
+    if (cantOrden <= 0) {
       alert('Cantidad a Producir no válida');
       inpCantOrden.focus();
     }
@@ -170,12 +162,11 @@ window.addEventListener('load', (event) => {
       inpCantBuena.focus();
     }
     else {
-      inpOrdProd.readOnly = true;
       inpCantOrden.readOnly = true;
       inpCantBase.readOnly = true;
 
       if (buscaDatos(cantBuena)) {
-        muestraEtiquetas(arrayEtiquetas);
+        muestraEtiquetas(etiqs);
       }
     }
   });
