@@ -1,8 +1,8 @@
 window.addEventListener('load', (event) => {
   // console.log({ event });
   
-  const arrayAlpnr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  const base36 = arrayAlpnr.length;
+  const base36 = 36;
+  const arrayAlpnr = Array.from('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
   const alpnrForm = document.getElementById('alpnr_form');
   const alpnrInp1 = document.getElementById('alpnr_inp1');
   const alpnrInp2 = document.getElementById('alpnr_inp2');
@@ -10,18 +10,15 @@ window.addEventListener('load', (event) => {
   
   // Conversión alfanumérico - decimal
   function AlpnrToDecim(alpnr) {
-    // console.log({ alpnr });
-
     let decim = 0;
-    const length = alpnr.length;
+    
+    const chars = Array.from(alpnr).reverse();
   
-    for (let i = 0; i < length; i++) {
-      let pos1 = (length - (i + 1));
-      let char = alpnr.charAt(pos1).toUpperCase();
-      let pos2 = arrayAlpnr.indexOf(char);
+    chars.forEach((char, index) => {
+      const posnr = arrayAlpnr.indexOf(char.toUpperCase());
   
-      if (pos2 !== -1) {
-        decim += (pos2 * (base36 ** i));
+      if (posnr > -1) {
+        decim += (posnr * (base36 ** index));
       }
       else {
         console.error('Valor no alfanumérico');
@@ -34,12 +31,12 @@ window.addEventListener('load', (event) => {
   }
   
   // Conversión decimal - alfanumérico 
-  function DecimToAlpnr(decim) {
-    // console.log({ decim });
-    
+  function DecimToAlpnr(decim) {    
     let alpnr = '';
 
-    if (decim == 0) {
+    if (decim <= 0) {
+      console.error('Valor no numérico');
+      
       return '0';
     }
   
@@ -117,35 +114,32 @@ window.addEventListener('load', (event) => {
     }
   }
 
-  // Convierte a formato de salida 
-  function DecimalOutput(value) {
-    if (value == 0) {
-      return '0.00';
-    }
-
-    if (typeof value == 'number') {
-      value = value.toFixed(2);
-    }
-
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-
   // Convierte a formato de entrada
-  function DecimalInput(value) {
+  const decimalInput = (value) => {
     if (value == 0) {
       return 0;
     }
 
-    if (typeof value == 'number') {
-      value = value.toFixed(2);
+    if (typeof value == 'string') {
+      value = (value.replace(/,/g, '') * 1);
     }
 
-    return parseFloat(value.replace(/,/g, ''));
+    return parseFloat(value.toFixed(2));
+  }
+
+  // Convierte a formato de salida 
+  const decimalOutput = (value) => {
+    if (value == 0) {
+      return '0.00';
+    }
+
+    value = decimalInput(value).toFixed(2);
+
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   function test(alpnr1, alpnr2) {
-    let decim1 = 0, alpnrA = '', 
-        decim2 = 0, alpnrB = '';
+    let decim1 = 0, alpnrA = '', decim2 = 0, alpnrB = '';
 
     console.clear();
 
