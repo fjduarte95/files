@@ -1,5 +1,5 @@
-window.addEventListener('load', (event) => {
-  // console.log({ event });
+window.addEventListener('load', (e) => {
+  // console.log({ e });
 
   const formNotif = document.getElementById('formNotif');
   const inpCantOrden = document.getElementById('inpCantOrden');
@@ -8,25 +8,24 @@ window.addEventListener('load', (event) => {
   const inpCantRest = document.getElementById('inpCantRest');
   const tbodyEtiq = document.getElementById('tbodyEtiq');
   const decimalInputs = document.querySelectorAll('.decimal');
-
-  let cantBuena = 0, cantFabricada = 0, etiqs = [],
+  
+  let cantBuena = 0, cantFabricada = 0, etiqs = [], 
     cantOrden = 0, cantBase = 0;
 
   function buscaDatos(cantBuena) {
-    let cantEtiq = etiqs.length;
+    let index = (etiqs.length - 1);
     let cantNotificar = 0, cantPosterior = 0;
 
-    if (cantEtiq > 0) {
-      let i = (cantEtiq - 1);
-      cantNotificar = decimalInput(cantBuena + etiqs[i].exced);
+    if (index > -1) {
+      cantNotificar = decimalInput(cantBuena + etiqs[index].exced);
       cantPosterior = decimalInput(cantBuena + cantFabricada);
 
       if (cantPosterior <= cantOrden) {
         if (cantNotificar < cantBase) {
-          etiqs[i].exced = cantNotificar;
+          etiqs[index].exced = cantNotificar;
         }
         else {
-          etiqs[i].exced = 0;
+          etiqs[index].exced = 0;
         }
       }
     }
@@ -109,7 +108,7 @@ window.addEventListener('load', (event) => {
   }
 
   // Convierte a formato de entrada
-  let decimalInput = (value) => {
+  const decimalInput = (value) => {
     if (value == 0) {
       return 0;
     }
@@ -120,9 +119,9 @@ window.addEventListener('load', (event) => {
 
     return parseFloat(value.toFixed(2));
   }
-
+  
   // Convierte a formato de salida 
-  let decimalOutput = (value) => {
+  const decimalOutput = (value) => {
     if (value == 0) {
       return '0.00';
     }
@@ -142,22 +141,22 @@ window.addEventListener('load', (event) => {
     });
   });
 
-  formNotif.addEventListener('submit', (event) => {
-    event.preventDefault();
+  formNotif.addEventListener('submit', (e) => {
+    e.preventDefault();
 
     cantOrden = decimalInput(inpCantOrden.value);
     cantBase = decimalInput(inpCantBase.value);
     cantBuena = decimalInput(inpCantBuena.value);
 
-    if (cantOrden <= 0) {
+    if (cantOrden == 0) {
       alert('Cantidad a Producir no válida');
       inpCantOrden.focus();
     }
-    else if (cantBase <= 0) {
+    else if (cantBase == 0) {
       alert('Cantidad Base no válida');
       inpCantBase.focus();
     }
-    else if (cantBuena <= 0) {
+    else if (cantBuena == 0) {
       alert('Cantidad a Notificar no válida');
       inpCantBuena.focus();
     }
